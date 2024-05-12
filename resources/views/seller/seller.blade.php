@@ -288,7 +288,7 @@
                                             <select name="status" id="" onchange="this.form.submit()">
                                                 <option value="Pending" @if ($order->status == 'Pending') selected @endif>Pending</option>
                                                 <option value="Seller Packing Your Order" @if ($order->status == 'Seller Packing Your Order') selected @endif>Seller Packing Your Order</option>
-                                                <option value="Waiting for Delivery Rider to Accept" @if ($order->status == 'Waiting for Delivery Rider to Accept') selected @endif>Waiting for Delivery Rider to Accept</option>
+                                                <option value="Waiting for Delivery Rider to Accept the order" @if ($order->status == 'Waiting for Delivery Rider to Accept the order') selected @endif>Waiting for Delivery Rider to Accept the order</option>
 
 
                                                 <option value="Seller Handed Order to Delivery Rider" @if ($order->status == 'Seller Handed Order to Delivery Rider') selected @endif>Seller Handed Order to Delivery Rider</option>
@@ -347,7 +347,7 @@
                         <select name="status" onchange="this.form.submit()">
                             <option value="Pending" @if ($order->status == 'Pending') selected @endif>Pending</option>
                             <option value="Seller Packing Your Order" @if ($order->status == 'Seller Packing Your Order') selected @endif>Seller Packing Your Order</option>
-                            <option value="Waiting for Delivery to Accept" @if ($order->status == 'Waiting for Delivery Rider to Accept') selected @endif>Waiting for Delivery Rider to Accept</option>
+                            <option value="Waiting for Delivery Rider to Accept the order" @if ($order->status == 'Waiting for Delivery Rider to Accept the order') selected @endif>Waiting for Delivery Rider to Accept the order</option>
                             <option value="Accepted" @if ($order->status == 'Accepted') selected @endif>Accepted</option>
 
                             <option value="Seller Handed Order to Delivery Rider" @if ($order->status == 'Seller Handed Order to Delivery Rider') selected @endif>Seller Handed Order to Delivery Rider</option>

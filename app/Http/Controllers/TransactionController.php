@@ -9,6 +9,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use function Laravel\Prompts\alert;
 
@@ -91,7 +92,7 @@ class TransactionController extends Controller
             
             // Save the order
             $insert->save();
-            
+         
             // Remove the item from the cart
             $cartItem = Cart::where('prod_id', $id)
                             ->where('user_email', $request->email)
@@ -105,6 +106,50 @@ class TransactionController extends Controller
         return redirect()->back()->with('success', 'Your order has been placed successfully.');
     }
     
+    public function buynow(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'status' => 'required|string',
+            'total' => 'required|numeric',
+            'qty' => 'required|numeric',
+            'selected_item_ids' => 'required|string',
+            'selected_item_names' => 'required|string',
+            'prod_id' => 'required|numeric',
+            'tracking_code' => 'required|string',
+            'payment_method' => 'required|string',
+            'shipping_method' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+        ]);
+
+        // Create a new order
+        $order = new Order();
+        $order->user_email = $validatedData['email'];
+        $order->status = $validatedData['status'];
+        $order->total_amount = $validatedData['total'];
+        $order->qty = $validatedData['qty'];
+        $order->items = $validatedData['selected_item_names'];
+        $order->tracking_code = $validatedData['tracking_code'];
+        $order->payment_method = $validatedData['payment_method'];
+        $order->shippingtype = $validatedData['shipping_method'];
+        $order->shipping_address = $validatedData['address'];
+        $order->phone = $validatedData['phone'];
+        $order->payment_status = 'Not Paid';
+
+        $order->save();
+
+        // Update product stock
+        $product = Product::find($validatedData['prod_id']);
+        if ($product) {
+            $product->stock -= $validatedData['qty'];
+            $product->save();
+        }
+
+        // Redirect or return response
+        return redirect()->back()->withSuccess('Order placed successfully!');
+    }
     
     public function clearCart(){
        Cart::truncate();
@@ -112,8 +157,11 @@ class TransactionController extends Controller
 
     }
 public function order(){
-    return view('user.order');
+    $useremail=Session::get('user_email');
+    $order=Order::where('user_email',$useremail)->get();
+    return view('user.order',compact('order'));
 }
+
 
 // for seller
 public function addProd(Request $request)
@@ -199,5 +247,10 @@ public function update(Request $request)
         $status->rider=$request->rider;
         $status->save();
         return redirect("/home");
+    }
+    public function DeliveryAssign(){
+        $riderEmail=Session::get('user_email');
+        $assignedOrders = Order::where('rider', $riderEmail)->get();
+        return view('deliveryrider.delivery',compact('assignedOrders'));
     }
 }

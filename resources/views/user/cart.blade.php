@@ -124,7 +124,7 @@
                 @foreach($fetch as $item)
                 <div class="col mb-4">
                     <div class="card">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ44MnDnjIkQdn1K0Q-Jbakvk7Ud-w3UZUou3NJjA2t16A79p4cCr3lMrs958wuOpCm_tw&usqp=CAU" class="card-img-top product-img" alt="Product Image">
+                    <img src="./{{ $item->img }}" class="card-img-top" alt="Product Image" style="max-height: 200px;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $item->name }}</h5>
                             <p class="card-text">Quantity: {{ $item->quantity }}</p>

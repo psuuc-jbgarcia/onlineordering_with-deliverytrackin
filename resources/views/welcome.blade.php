@@ -118,6 +118,7 @@
         .featured-section .card-text {
             color: #666;
         }
+        html{scroll-behavior: smooth;}
     </style>
 </head>
 <body>
@@ -134,14 +135,9 @@
                         <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Shop</a>
+                        <a class="nav-link" href="#shop">Shop</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                 
                 </ul>
                 <div class="ml-auto">
                     <a href="{{ route('login') }}" class="btn btn-light mr-2">Log in</a>
@@ -164,7 +160,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="product-category">
                             <a href="#">
-                                <img src="https://www.pinterest.com/pin/765541636666277710/" alt="Clothes" class="img-fluid">
+                                <img src="https://i.pinimg.com/236x/b0/9d/ce/b09dce1fbeeec696d0c581cf4cff3163.jpg" alt="Clothes" class="img-fluid">
                                 <h2 class="text-center mt-3">Clothes</h2>
                             </a>
                         </div>
@@ -173,7 +169,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="product-category">
                             <a href="#">
-                                <img src="https://via.placeholder.com/400x300" alt="Computer Accessories" class="img-fluid">
+                                <img src="https://i.pinimg.com/736x/3b/e5/d2/3be5d2c91c64dc240bef81e339c40d8f.jpg" alt="Computer Accessories" class="img-fluid">
                                 <h3 class="text-center mt-3">Computer Accessories</h3>
                             </a>
                         </div>
@@ -182,7 +178,7 @@
                     <div class="col-md-4 mb-4">
                         <div class="product-category">
                             <a href="#">
-                                <img src="https://via.placeholder.com/400x300" alt="Jewelleries" class="img-fluid">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQCrRGG62rMOj42fnKM1xWE-uOu1BpkFQwTWhecRGtBw&s" alt="Jewelleries" class="img-fluid">
                                 <h2 class="text-center mt-3">Jewelleries</h2>
                             </a>
                         </div>
@@ -193,53 +189,53 @@
         <hr class="my-5">
       
     </div>
-
-<!-- Latest News Section -->
-<div class="container-fluid latest-news">
+<!-- Online Shopping Section -->
+<div class="container-fluid online-shopping" id="shop">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Latest News</h2>
-                <p>Stay updated with our latest news and promotions.</p>
+                <h2>Online Shopping</h2>
+                <p>Discover our latest arrivals and promotions for online shopping.</p>
             </div>
         </div>
         <div class="row">
-            <!-- News 1 -->
+            <!-- Product 1 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">New Arrival: Spring Collection</h5>
-                        <p class="card-text">Check out our latest Spring Collection. Get trendy outfits at amazing prices!</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                    <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSQvIKs9AAC2dT0UQzPYuXdtjBdS1os4_FsJQXz3B3ol8kpbQty37IzUviBERbxemvLE8w9SvwbwwL0kQTeiMo9tOR4jqWIilYO1dq4AzU&usqp=CAE" class="card-img-top" alt="Trendy Dresses">
+                    <div class="card-body" style="height: 250px;">
+                        <h5 class="card-title">New Arrivals: Trendy Dresses</h5>
+                        <p class="card-text">Explore our latest collection of trendy dresses. Perfect for any occasion!</p>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
-            <!-- News 2 -->
+            <!-- Product 2 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Summer Sale - Up to 50% Off</h5>
-                        <p class="card-text">Enjoy huge discounts on our summer collection. Limited time offer!</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFFI_LrokfBBee6mlnZN-spyDvZbBzDt3TP0RHba2cfA&s" class="card-img-top" alt="Footwear">
+                    <div class="card-body" style="height: 250px;">
+                        <h5 class="card-title">Exclusive Offer: Footwear</h5>
+                        <p class="card-text">Get exclusive discounts on our latest footwear collection. Limited time offer!</p>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
-            <!-- News 3 -->
+            <!-- Product 3 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Get Ready for Fall: New Accessories</h5>
-                        <p class="card-text">Explore our latest accessories to complete your fall look.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
+                    <img src="https://images.saymedia-content.com/.image/t_share/MjAyNjY5Nzk4NzMwMTE0MDYw/elevate-your-look-the-ultimate-guide-to-chic-fashion-accessories.png" class="card-img-top" alt="Accessories">
+                    <div class="card-body" style="height: 250px;">
+                        <h5 class="card-title">Accessorize Your Look</h5>
+                        <p class="card-text">Discover our latest accessories to complement your style.</p>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
     <!-- Featured Section -->

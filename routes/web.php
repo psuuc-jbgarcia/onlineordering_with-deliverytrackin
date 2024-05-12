@@ -25,6 +25,7 @@ Route::get("/order",[TransactionController::class,'order'])->name('order');
 Route::get("/fecthProd",[TransactionController::class,'fecthProd'])->name('fecthProd');
 
 Route::post("/placeOrder",[TransactionController::class,'placeOrder'])->name('placeOrder');
+Route::post('/buynow',[TransactionController::class, 'buynow'])->name('buynow');
 
 Route::match(['get','post'],"/remove/{id}",[TransactionController::class,'removeitem'])->name('removeitem');
 Route::post("/clearCart",[TransactionController::class,'clearCart'])->name('clearCart');
@@ -47,5 +48,6 @@ Route::get('/gotoadd',[TransactionController::class, 'gotoadd'])->name('gotoadd'
 Route::post('/update',[TransactionController::class, 'update'])->name('update');
 Route::post('/updateStatus',[TransactionController::class, 'updateStatus'])->name('updateStatus');
 Route::post('/acceptOrder',[TransactionController::class, 'acceptOrder'])->name('acceptOrder');
+Route::get('/DeliveryAssign',[TransactionController::class, 'DeliveryAssign'])->name('DeliveryAssign');
 
 Route::get('/deleteProd/{id}',[TransactionController::class, 'deleteProd'])->name('deleteProd');

@@ -25,7 +25,7 @@ class HomeController extends Controller
                 $prod=Product::all();
                 $orders=Order::all();
                 $readyForDeliveryOrders = Order::where('status', 'Accepted')->get();
-                $AvailableDeliveryOrders = Order::where('status', 'Waiting for Delivery Rider to Accept')->get();
+                $AvailableDeliveryOrders = Order::where('status', 'Waiting for Delivery Rider to Accept the order')->get();
 
                     switch ($user->usertype) {
                 case 'user':

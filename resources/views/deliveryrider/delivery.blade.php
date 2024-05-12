@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Orders</title>
+    <title>Assigned Orders</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    <!-- Custom styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom styles -->
     <style>
-        .navbar {
+           .navbar {
             background-color: #8a2be2; /* Violet color */
         }
 
@@ -26,20 +27,8 @@
         .navbar-dark .navbar-toggler-icon {
             background-color: #000000; /* Black color for toggler icon */
         }
-
-        .signature-pad {
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-        }
-
         .order-section {
             margin-top: 20px;
-        }
-
-        .order-section h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
         }
 
         .order-card {
@@ -59,8 +48,12 @@
             margin-bottom: 10px;
         }
 
-        .order-card .accept-btn {
+        .deliver-btn {
             margin-top: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -75,7 +68,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a  class="nav-link active" aria-current="page" href="{{ route('DeliveryAssign') }}">Delivery Assignment</a>
@@ -104,23 +97,44 @@
         </div>
     </div>
 </nav>
+
 <div class="container order-section">
-    <h2>Available Orders</h2>
+    <h2>Assigned Orders</h2>
     <div class="row">
-        @if(count($AvailableDeliveryOrders) > 0)
-            @foreach ($AvailableDeliveryOrders as $avail)
+        @if(count($assignedOrders) > 0)
+            @foreach ($assignedOrders as $order)
                 <div class="col-md-6">
                     <div class="order-card">
-                        <h3>Order Tracking Code: {{ $avail->tracking_code }}</h3>
-                        <p><strong>Delivery Address:</strong> {{ $avail->shipping_address }}</p>
-                        <p><strong>Items:</strong> {{ $avail->items }}</p>
-                        <p><strong>Payment Type:</strong> {{ $avail->payment_method }}</p>
-                        <p><strong>Contact:</strong> {{ $avail->phone }}</p>
-                        <form action="{{ route('acceptOrder') }}" method="post">
+                        <h3>Order Tracking Code: {{ $order->tracking_code }}</h3>
+                        <p><strong>Delivery Address:</strong> <a href="#" onclick="openRoute('{{ $order->shipping_address }}')"> {{ $order->shipping_address }}</a></p>
+                        <p><strong>Items:</strong> {{ $order->items }}</p>
+                        <p><strong>Payment Type:</strong> {{ $order->payment_method }}</p>
+                        <p><strong>Contact:</strong> {{ $order->phone }}</p>
+                        <form action="" method="post" onchange="this.form.submit()">
                             @csrf
-                            <input type="hidden" value="{{ $avail->id }}" name="id">
-                            <input type="hidden" value="{{ Session::get('user_email') }}" name="rider">
-                            <button type="submit" class="accept-btn btn btn-success">Accept Order</button>
+                            <div class="form-group">
+                                <label for="status">Delivery Status:</label>
+                                <select class="form-control" id="status" name="status">
+                                    <option value="" @if ($order->status=='Accepted')
+                                        selected
+                                    @endif>{{ $order->status }}</option>
+                                    <option value="Out for Delivery"  @if ($order->status=='Out for Delivery')
+                                        selected
+                                    @endif>Out for Delivery</option>
+                                    <option value="Delivered"  @if ($order->status=='Delivered')
+                                        selected
+                                    @endif>Delivered</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="proof">Proof of Delivery:</label>
+                            </div>
+                        </form>
+                        <form action="" enctype="multipart/form-data">
+                        <input type="file" class="form-control" id="proof" name="proof">
+
+                        <button type="submit" class="deliver-btn btn btn-primary">Submit</button>
+
                         </form>
                     </div>
                 </div>
@@ -128,19 +142,22 @@
         @else
             <div class="col-md-12">
                 <div class="alert alert-info" role="alert">
-                    No available orders at the moment.
+                    No assigned orders to deliver.
                 </div>
             </div>
         @endif
     </div>
 </div>
 
-
 <!-- Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<!-- Include Signature Pad library -->
-<script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
 
+<script>
+    function openRoute(address) {
+        var defaultLocation = "15.98821632442629,120.57362097313083"; // Default location
+        window.open("https://www.google.com/maps/dir/" + defaultLocation + "/" + encodeURIComponent(address));
+    }
+</script>
 
 </body>
 </html>

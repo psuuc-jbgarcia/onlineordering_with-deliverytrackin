@@ -3,15 +3,15 @@
         <h2 class="text-center mb-4">My Orders</h2>
         <ul class="nav nav-tabs justify-content-center" id="orderTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="toShip-tab" data-bs-toggle="tab" data-bs-target="#toShip"
+                <button class="nav-link active fw-bold bg-primary text-white" id="toShip-tab" data-bs-toggle="tab" data-bs-target="#toShip"
                     type="button" role="tab" aria-controls="toShip" aria-selected="true">To Ship</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="toReceive-tab" data-bs-toggle="tab" data-bs-target="#toReceive"
+                <button class="nav-link fw-bold bg-success text-white" id="toReceive-tab" data-bs-toggle="tab" data-bs-target="#toReceive"
                     type="button" role="tab" aria-controls="toReceive" aria-selected="false">To Receive</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="toReview-tab" data-bs-toggle="tab" data-bs-target="#toReview"
+                <button class="nav-link fw-bold bg-warning text-dark" id="toReview-tab" data-bs-toggle="tab" data-bs-target="#toReview"
                     type="button" role="tab" aria-controls="toReview" aria-selected="false">To Review</button>
             </li>
         </ul>
@@ -19,74 +19,154 @@
             <div class="tab-pane fade show active" id="toShip" role="tabpanel" aria-labelledby="toShip-tab">
                 <div class="accordion" id="toShipAccordion">
                     <!-- Order details for "To Ship" -->
-                    <div class="card">
-                        <div class="card-header bg-purple">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Order #TRK12345
-                                </button>
-                            </h2>
-                        </div>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#toShipAccordion">
-                            <div class="accordion-body">
-                                <p>Status: To Ship</p>
-                                <p>Total Amount: Php1000</p>
-                                <p>Items:</p>
-                                <ul>
-                                    <li>Item 1</li>
-                                    <li>Item 2</li>
-                                </ul>
-                                <p>Shipping Address: 123 Main St, City</p>
-                                <p>Phone: 123-456-7890</p>
+                    @if ($order)
+                        @php $hasToShip = false; @endphp
+                        @foreach ($order as $ord)
+                            @if ($ord->status == 'Pending' || $ord->status == 'Seller Packing Your Order' || $ord->status == 'Waiting for Delivery Rider to Accept the order')
+                                @php $hasToShip = true; @endphp
+                                <div class="card">
+                                    <div class="card-header bg-primary">
+                                        <h2 class="accordion-header" id="headingToShip{{ $ord->id }}">
+                                            <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseToShip{{ $ord->id }}" aria-expanded="false"
+                                                aria-controls="collapseToShip{{ $ord->id }}">
+<b>                                                Order#{{ $ord->tracking_code }}
+</b>                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseToShip{{ $ord->id }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingToShip{{ $ord->id }}" data-bs-parent="#toShipAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><strong>Status:</strong> To Ship</p>
+                                                    <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
+                                                    <p><strong>Items:</strong>  {{ $ord->items }}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Shipping Address:</strong>  {{ $ord->shipping_address }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        @if (!$hasToShip)
+                            <div class="alert alert-info" role="alert">
+                                <strong>No orders to ship.</strong>
                             </div>
+                        @endif
+                    @else
+                        <div class="alert alert-warning" role="alert">
+                            <strong>No data available.</strong>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
+         
             <div class="tab-pane fade" id="toReceive" role="tabpanel" aria-labelledby="toReceive-tab">
                 <div class="accordion" id="toReceiveAccordion">
                     <!-- Order details for "To Receive" -->
+                    @if ($order)
+                        @php $hasToReceive = false; @endphp
+                        @foreach ($order as $ord)
+                            @if ($ord->status == 'Out for Delivery')
+                                @php $hasToReceive = true; @endphp
+                                <div class="card">
+                                    <div class="card-header bg-success">
+                                        <h2 class="accordion-header" id="headingToReceive{{ $ord->id }}">
+                                            <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseToReceive{{ $ord->id }}" aria-expanded="false"
+                                                aria-controls="collapseToReceive{{ $ord->id }}">
+<b>                                                Order#{{ $ord->tracking_code }}
+</b>                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseToReceive{{ $ord->id }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingToReceive{{ $ord->id }}" data-bs-parent="#toReceiveAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><strong>Status:</strong> Out for Delivery</p>
+                                                    <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
+                                                    <p><strong>Items:</strong> {{ $ord->items }}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Shipping Address:</strong> {{ $ord->shipping_address }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        @if (!$hasToReceive)
+                            <div class="alert alert-info" role="alert">
+                                <strong>No orders out for delivery.</strong>
+                            </div>
+                        @endif
+                    @else
+                        <div class="alert alert-warning" role="alert">
+                            <strong>No data available.</strong>
+                        </div>
+                    @endif
                 </div>
             </div>
+
             <div class="tab-pane fade" id="toReview" role="tabpanel" aria-labelledby="toReview-tab">
                 <div class="accordion" id="toReviewAccordion">
                     <!-- Order details for "To Review" -->
+                    @if ($order)
+                        @php $hasToReview = false; @endphp
+                        @foreach ($order as $ord)
+                            @if ($ord->status == 'To Review')
+                                @php $hasToReview = true; @endphp
+                                <div class="card">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h2 class="accordion-header" id="headingToReview{{ $ord->id }}">
+                                            <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseToReview{{ $ord->id }}" aria-expanded="false"
+                                                aria-controls="collapseToReview{{ $ord->id }}">
+<b>                                              Order#{{ $ord->tracking_code }}
+</b>                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseToReview{{ $ord->id }}" class="accordion-collapse collapse"
+                                        aria-labelledby="headingToReview{{ $ord->id }}" data-bs-parent="#toReviewAccordion">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p><strong>Status:</strong> To Review</p>
+                                                    <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
+                                                    <p><strong>Items:</strong> {{ $ord->items }}</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p><strong>Shipping Address:</strong> {{ $ord->shipping_address }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        @if (!$hasToReview)
+                            <div class="alert alert-info" role="alert">
+                                <strong>No orders to review.</strong>
+                            </div>
+                        @endif
+                    @else
+                        <div class="alert alert-warning" role="alert">
+                            <strong>No data available.</strong>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Close all accordions initially
+        $(".accordion-collapse").collapse('hide');
+    </script>
 </x-app-layout>
-
-<style>
-    .nav-link {
-        margin: 0 15px; /* Adjust spacing between tabs */
-        color: #8a2be2; /* Violet color */
-        border: none;
-    }
-
-    .nav-link.active {
-        font-weight: bold;
-    }
-
-    .bg-purple {
-        background-color: #8a2be2 !important; /* Violet color */
-    }
-
-    .accordion-button {
-        color: #fff; /* White text for accordion button */
-        background-color: #8a2be2; /* Violet background for accordion button */
-        border: none;
-    }
-
-    .accordion-button:not(.collapsed) {
-        background-color: #8a2be2; /* Violet background for accordion button when expanded */
-    }
-
-    .accordion-body {
-        background-color: #f8f9fa; /* Light gray background for accordion body */
-        border: 1px solid #dee2e6; /* Border color for accordion body */
-        border-top: none; /* Remove top border */
-    }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
