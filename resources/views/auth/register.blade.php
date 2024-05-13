@@ -104,7 +104,7 @@
 </head>
 <body>
     <div class="form-container">
-        <img class="logo" src="path_to_your_logo" alt="Your Logo">
+        <img class="logo" src="notext-removebg-preview.png" alt="Your Logo" >
 
         <div class="form-title">{{ __('Register') }}</div>
 

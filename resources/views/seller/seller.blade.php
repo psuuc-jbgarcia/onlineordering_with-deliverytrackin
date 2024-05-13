@@ -323,6 +323,8 @@
                 <th>Shipping Address</th>
                 <th>Shipping Type</th>
                 <th>Phone</th>
+                <th>Delivery Rider</th>
+
                 <th>Created At</th>
                 <th>Status</th>
             </tr>
@@ -339,6 +341,8 @@
                 <td>{{ $order->shipping_address }}</td>
                 <td>{{ $order->shippingtype }}</td>
                 <td>{{ $order->phone }}</td>
+                <td>{{ $order->rider }}</td>
+
                 <td>{{ $order->created_at }}</td>
                 <td>
                     <form action="{{ route('updateStatus') }} " method="post">
@@ -565,7 +569,7 @@
         // DataTable initialization
         var table = $('#readyForDeliveryTable').DataTable({
             "columnDefs": [{
-                "targets": 9, // Index of the 'created_At' column
+                "targets": 10, // Index of the 'created_At' column
                 "type": "date",
                 "render": function(data) {
                     return moment(data).format('YYYY-MM-DD');

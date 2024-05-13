@@ -110,14 +110,15 @@
                         <p><strong>Items:</strong> {{ $order->items }}</p>
                         <p><strong>Payment Type:</strong> {{ $order->payment_method }}</p>
                         <p><strong>Contact:</strong> {{ $order->phone }}</p>
-                        <form action="" method="post" onchange="this.form.submit()">
+                        <form action="{{ route('updateByrider') }}" method="post" >
                             @csrf
+                            <input type="hidden" name="id" value="{{ $order->id }}">
                             <div class="form-group">
                                 <label for="status">Delivery Status:</label>
-                                <select class="form-control" id="status" name="status">
+                                <select class="form-control" id="status" name="status" onchange="this.form.submit()">
                                     <option value="" @if ($order->status=='Accepted')
                                         selected
-                                    @endif>{{ $order->status }}</option>
+                                    @endif>Accepted</option>
                                     <option value="Out for Delivery"  @if ($order->status=='Out for Delivery')
                                         selected
                                     @endif>Out for Delivery</option>

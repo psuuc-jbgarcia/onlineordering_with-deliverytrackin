@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
                         <a class="navbar-brand" href="{{ route('home') }}">
-                            <img src="path_to_your_logo.png" alt="Your Logo">
+                        <img src="icon.png" alt="Your Logo" style="max-height: 100px;">
                         </a>
                 </div>
 

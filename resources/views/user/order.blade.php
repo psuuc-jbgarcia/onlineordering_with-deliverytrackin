@@ -12,7 +12,7 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link fw-bold bg-warning text-dark" id="toReview-tab" data-bs-toggle="tab" data-bs-target="#toReview"
-                    type="button" role="tab" aria-controls="toReview" aria-selected="false">To Review</button>
+                    type="button" role="tab" aria-controls="toReview" aria-selected="false">Delivered</button>
             </li>
         </ul>
         <div class="tab-content" id="orderTabsContent">
@@ -120,7 +120,7 @@
                     @if ($order)
                         @php $hasToReview = false; @endphp
                         @foreach ($order as $ord)
-                            @if ($ord->status == 'To Review')
+                            @if ($ord->status == 'Delivered')
                                 @php $hasToReview = true; @endphp
                                 <div class="card">
                                     <div class="card-header bg-warning text-dark">
@@ -137,7 +137,7 @@
                                         <div class="accordion-body">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p><strong>Status:</strong> To Review</p>
+                                                    <p><strong>Status:</strong> Delivered</p>
                                                     <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
                                                     <p><strong>Items:</strong> {{ $ord->items }}</p>
                                                 </div>
@@ -152,7 +152,7 @@
                         @endforeach
                         @if (!$hasToReview)
                             <div class="alert alert-info" role="alert">
-                                <strong>No orders to review.</strong>
+                                <strong>No orders Delivered.</strong>
                             </div>
                         @endif
                     @else

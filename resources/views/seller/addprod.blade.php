@@ -47,10 +47,24 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">Seller: {{ Auth::user()->name }}</a>
-    <!-- Add more Navbar content here -->
-</nav>
+<nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+                <br>
+                <br>
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#manage-products">Manage Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#manage-orders">Orders</a>
+                        </li>
+                        <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#ready-for-delivery">Accept by Delivery Rider</a>
+</li>
+
+                    </ul>
+                </div>
+            </nav>
 
 <div class="main-content">
     <div class="container">

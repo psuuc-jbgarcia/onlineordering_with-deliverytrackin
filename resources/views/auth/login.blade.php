@@ -94,13 +94,24 @@
             margin-top: 6px; /* Added margin-top for error message */
             font-size: 0.8rem; /* Adjust font size */
         }
+        .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
     </style>
 
     <div class="custom-form-container">
         <!-- Your Logo -->
         <div class="logo-container mb-4">
-            <img src="path_to_your_logo" alt="Your Logo" width="150">
-        </div>
+    <img src="notext-removebg-preview.png" alt="Your Logo" style="max-height: 200px;">
+</div>
+
+
 
         <div class="custom-form">
             <form method="POST" action="{{ route('login') }}">

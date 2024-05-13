@@ -47,7 +47,10 @@ Route::post('/addProd',[TransactionController::class, 'addProd'])->name('addProd
 Route::get('/gotoadd',[TransactionController::class, 'gotoadd'])->name('gotoadd');
 Route::post('/update',[TransactionController::class, 'update'])->name('update');
 Route::post('/updateStatus',[TransactionController::class, 'updateStatus'])->name('updateStatus');
-Route::post('/acceptOrder',[TransactionController::class, 'acceptOrder'])->name('acceptOrder');
-Route::get('/DeliveryAssign',[TransactionController::class, 'DeliveryAssign'])->name('DeliveryAssign');
+
 
 Route::get('/deleteProd/{id}',[TransactionController::class, 'deleteProd'])->name('deleteProd');
+// rider
+Route::post('/updateByrider',[TransactionController::class, 'updateByrider'])->name('updateByrider');
+Route::post('/acceptOrder',[TransactionController::class, 'acceptOrder'])->name('acceptOrder');
+Route::get('/DeliveryAssign',[TransactionController::class, 'DeliveryAssign'])->name('DeliveryAssign');
