@@ -113,13 +113,19 @@
 
             <!-- Name -->
             <div class="form-group">
-                <label for="name" class="form-label">{{ __('Name') }}</label>
+                <label for="name" class="form-label">{{ __('First Name') }}</label>
                 <input id="name"  class="form-input" type="text" name="name" value="{{ old('name') }}" autofocus autocomplete="name" />
                 @if ($errors->has('name'))
                     <span class="form-error">{{ $errors->first('name') }}</span>
                 @endif
             </div>
-
+            <div class="form-group">
+                <label for="lname" class="form-label">{{ __('Last Name') }}</label>
+                <input id="lname"  class="form-input" type="text" name="lname" value="{{ old('lname') }}" autofocus autocomplete="lname" />
+                @if ($errors->has('lname'))
+                    <span class="form-error">{{ $errors->first('lname') }}</span>
+                @endif
+            </div>
             <!-- Email Address -->
             <div class="form-group">
                 <label for="email" class="form-label">{{ __('Email') }}</label>

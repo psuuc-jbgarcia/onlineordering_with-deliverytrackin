@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Support\Facades\Session;
 use App\Models\Order;
+use App\Models\Prof;
+
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 
@@ -151,7 +153,7 @@ class TransactionController extends Controller
         }
 
         // Redirect or return response
-        return redirect()->back()->withSuccess('Order placed successfully!');
+        return redirect()->back()->with('success', 'Your order has been placed successfully.');
     }
 
     public function clearCart()
@@ -269,7 +271,10 @@ class TransactionController extends Controller
     {
         $riderEmail = Session::get('user_email');
         $statuses = ['Accepted', 'Out for Delivery'];
-        $assignedOrders = Order::where('rider', $riderEmail)
+        $additionalStatus = 'Seller Handed Order to Delivery Rider';
+        
+        // Merge the additional status into the existing statuses array
+        $statuses[] = $additionalStatus;        $assignedOrders = Order::where('rider', $riderEmail)
             ->whereIn('status', $statuses)
             ->get();
         return view('deliveryrider.delivery', compact('assignedOrders'));
@@ -291,4 +296,19 @@ class TransactionController extends Controller
 
         return redirect()->back();
     }
+    public function uploadproof(Request $request){
+        $id=$request->id;
+        $add=Order::find($id);
+   
+         // Upload image file
+     if ($request->hasFile('proof')) {
+        $image = $request->file('proof');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $image->move(public_path('proofimages'), $imageName);
+        $add->proof_img = 'proofimages/' . $imageName;
+    }
+    $add->save();
+    return redirect()->back();
+    }
 }
+    

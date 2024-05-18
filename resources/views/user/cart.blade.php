@@ -174,8 +174,8 @@
                         <input type="hidden" name="qty" id="qty">
 
                         <!-- Hidden input for selected item IDs -->
-                        <input type="text" name="selected_item_ids" id="selectedItemsIdsInput">
-                        <input type="text" name="selected_item_names" id="selectedItemsNamesInput"> <!-- Name input -->
+                        <input type="hidden" name="selected_item_ids" id="selectedItemsIdsInput">
+                        <input type="hidden" name="selected_item_names" id="selectedItemsNamesInput"> <!-- Name input -->
 
                         <!-- Hidden input for the product ID -->
                         <input type="hidden" id="productIDInput" name="prod_id">
@@ -202,7 +202,6 @@
                                     <label for="shippingMethod" class="form-label"><i class="fas fa-truck me-2 icon-purple"></i> Shipping Method:</label>
                                     <select class="form-select" id="shippingMethod" name="shipping_method">
                                         <option value="standard">Standard Shipping (Free)</option>
-                                        <option value="express">Express Shipping (+ Php100)</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

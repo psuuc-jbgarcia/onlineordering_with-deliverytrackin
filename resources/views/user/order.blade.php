@@ -22,7 +22,7 @@
                     @if ($order)
                         @php $hasToShip = false; @endphp
                         @foreach ($order as $ord)
-                            @if ($ord->status == 'Pending' || $ord->status == 'Seller Packing Your Order' || $ord->status == 'Waiting for Delivery Rider to Accept the order')
+                            @if ($ord->status == 'Pending' || $ord->status == 'Seller Packing Your Order' || $ord->status == 'Waiting for Delivery Rider to Accept the order'||$ord->status== 'Seller Handed Order to Delivery Rider'||$ord->status== 'Accepted')
                                 @php $hasToShip = true; @endphp
                                 <div class="card">
                                     <div class="card-header bg-primary">
@@ -39,7 +39,7 @@
                                         <div class="accordion-body">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p><strong>Status:</strong> To Ship</p>
+                                                    <p><strong>Status:</strong>{{$ord->status }}</p>
                                                     <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
                                                     <p><strong>Items:</strong>  {{ $ord->items }}</p>
                                                 </div>
@@ -88,7 +88,7 @@
                                         <div class="accordion-body">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <p><strong>Status:</strong> Out for Delivery</p>
+                                                    <p><strong>Status:</strong> {{$ord->status }}</p>
                                                     <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
                                                     <p><strong>Items:</strong> {{ $ord->items }}</p>
                                                 </div>
@@ -115,53 +115,60 @@
             </div>
 
             <div class="tab-pane fade" id="toReview" role="tabpanel" aria-labelledby="toReview-tab">
-                <div class="accordion" id="toReviewAccordion">
-                    <!-- Order details for "To Review" -->
-                    @if ($order)
-                        @php $hasToReview = false; @endphp
-                        @foreach ($order as $ord)
-                            @if ($ord->status == 'Delivered')
-                                @php $hasToReview = true; @endphp
-                                <div class="card">
-                                    <div class="card-header bg-warning text-dark">
-                                        <h2 class="accordion-header" id="headingToReview{{ $ord->id }}">
-                                            <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseToReview{{ $ord->id }}" aria-expanded="false"
-                                                aria-controls="collapseToReview{{ $ord->id }}">
-<b>                                              Order#{{ $ord->tracking_code }}
-</b>                                            </button>
-                                        </h2>
+    <div class="accordion" id="toReviewAccordion">
+        <!-- Order details for "To Review" -->
+        @if ($order)
+            @php $hasToReview = false; @endphp
+            @foreach ($order as $ord)
+                @if ($ord->status == 'Delivered')
+                    @php $hasToReview = true; @endphp
+                    <div class="card">
+                        <div class="card-header bg-warning text-dark">
+                            <h2 class="accordion-header" id="headingToReview{{ $ord->id }}">
+                                <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseToReview{{ $ord->id }}" aria-expanded="false"
+                                    aria-controls="collapseToReview{{ $ord->id }}">
+                                    <b>Order#{{ $ord->tracking_code }}</b>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseToReview{{ $ord->id }}" class="accordion-collapse collapse"
+                            aria-labelledby="headingToReview{{ $ord->id }}" data-bs-parent="#toReviewAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>Status:</strong> {{$ord->status }}</p>
+                                        <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
+                                        <p><strong>Items:</strong> {{ $ord->items }}</p>
                                     </div>
-                                    <div id="collapseToReview{{ $ord->id }}" class="accordion-collapse collapse"
-                                        aria-labelledby="headingToReview{{ $ord->id }}" data-bs-parent="#toReviewAccordion">
-                                        <div class="accordion-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <p><strong>Status:</strong> Delivered</p>
-                                                    <p><strong>Total Amount:</strong> {{ $ord->total_amount }}</p>
-                                                    <p><strong>Items:</strong> {{ $ord->items }}</p>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <p><strong>Shipping Address:</strong> {{ $ord->shipping_address }}</p>
-                                                </div>
-                                            </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Shipping Address:</strong> {{ $ord->shipping_address }}</p>
+                                        <!-- Proof of delivery image -->
+                                        <div class="proof-of-delivery">
+                                            <p><strong>Proof of Delivery:</strong></p>
+                                            <img src="{{ $ord->proof_img }}" alt="Proof of Delivery" class="img-fluid max-height-img" style="  max-height: 300px; /* Set your desired max height here */
+            object-fit: cover; /* This will ensure the image covers the area while maintaining aspect ratio */">
                                         </div>
                                     </div>
                                 </div>
-                            @endif
-                        @endforeach
-                        @if (!$hasToReview)
-                            <div class="alert alert-info" role="alert">
-                                <strong>No orders Delivered.</strong>
                             </div>
-                        @endif
-                    @else
-                        <div class="alert alert-warning" role="alert">
-                            <strong>No data available.</strong>
                         </div>
-                    @endif
+                    </div>
+                @endif
+            @endforeach
+            @if (!$hasToReview)
+                <div class="alert alert-info" role="alert">
+                    <strong>No orders Delivered.</strong>
                 </div>
+            @endif
+        @else
+            <div class="alert alert-warning" role="alert">
+                <strong>No data available.</strong>
             </div>
+        @endif
+    </div>
+</div>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -54,3 +54,5 @@ Route::get('/deleteProd/{id}',[TransactionController::class, 'deleteProd'])->nam
 Route::post('/updateByrider',[TransactionController::class, 'updateByrider'])->name('updateByrider');
 Route::post('/acceptOrder',[TransactionController::class, 'acceptOrder'])->name('acceptOrder');
 Route::get('/DeliveryAssign',[TransactionController::class, 'DeliveryAssign'])->name('DeliveryAssign');
+Route::post('/uploadproof',[TransactionController::class, 'uploadproof'])->name('uploadproof');
+

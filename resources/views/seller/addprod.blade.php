@@ -47,25 +47,50 @@
     </style>
 </head>
 <body>
-<nav class="col-md-2 d-none d-md-block bg-dark sidebar">
-                <br>
-                <br>
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#manage-products">Manage Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#manage-orders">Orders</a>
-                        </li>
-                        <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#ready-for-delivery">Accept by Delivery Rider</a>
-</li>
+<nav class="navbar navbar-expand-lg navbar-dark align-items-center" style="height: 80px;">
+    <div class="container">
+        <!-- Your Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="icon.png" alt="Your Logo" style="max-height: 100px;">
+        </a>
+      
+      
 
+        <!-- Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+        
+              <!-- Title -->
+        <div class="mx-auto text-center">
+            <p class="navbar-brand mb-0">Jekkong Online Ordering Website</p>
+        </div>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(Session::has('user_email'))
+                            {{ Session::get('user_email') }}
+                        @endif
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <x-dropdown-link :href="route('profile.edit')" style="text-decoration: none; color:black">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
                     </ul>
-                </div>
-            </nav>
-
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="main-content">
     <div class="container">
         <div class="form-container">
@@ -120,11 +145,14 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button> 
+                <a href="{{ route('home') }}" class="btn btn-danger">Back</a>
+
             </form>
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

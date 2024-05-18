@@ -161,7 +161,7 @@
                         <div class="product-category">
                             <a href="#">
                                 <img src="https://i.pinimg.com/236x/b0/9d/ce/b09dce1fbeeec696d0c581cf4cff3163.jpg" alt="Clothes" class="img-fluid">
-                                <h2 class="text-center mt-3">Clothes</h2>
+                                <h4 class="text-center mt-3">Clothes</h4>
                             </a>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                         <div class="product-category">
                             <a href="#">
                                 <img src="https://i.pinimg.com/736x/3b/e5/d2/3be5d2c91c64dc240bef81e339c40d8f.jpg" alt="Computer Accessories" class="img-fluid">
-                                <h3 class="text-center mt-3">Computer Accessories</h3>
+                                <h4 class="text-center mt-3">Computer Accessories</h4>
                             </a>
                         </div>
                     </div>
@@ -179,7 +179,7 @@
                         <div class="product-category">
                             <a href="#">
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQCrRGG62rMOj42fnKM1xWE-uOu1BpkFQwTWhecRGtBw&s" alt="Jewelleries" class="img-fluid">
-                                <h2 class="text-center mt-3">Jewelleries</h2>
+                                <h4 class="text-center mt-3">Jewelleries</h4>
                             </a>
                         </div>
                     </div>
@@ -238,40 +238,7 @@
 
 
 
-    <!-- Featured Section -->
-    <div class="container featured-section">
-        <h2>Discover New Trends</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Trend 1</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Trend 2</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Trend 3</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+\
     <!-- Features -->
     <div class="container py-5 bg-light">
         <h2 class="text-center mb-4 section-title">Why Choose Us</h2>
@@ -310,12 +277,23 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <p>&copy; 2024 E-Commerce Store. All rights reserved.</p>
+                    <p>&copy; 2024 E-Commerce Store. Jekkong All rights reserved.</p>
                 </div>
             </div>0
         </div>
     </footer>
-
+    <script>
+window.embeddedChatbotConfig = {
+chatbotId: "DaRKCON9cGg_5Bjyy8ZMA",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="DaRKCON9cGg_5Bjyy8ZMA"
+domain="www.chatbase.co"
+defer>
+</script>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

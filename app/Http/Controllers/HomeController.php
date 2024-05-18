@@ -23,10 +23,13 @@ class HomeController extends Controller
             // Determine user type and redirect accordingly
             $products = Product::all();
                 $prod=Product::all();
-                $orders=Order::all();
-                $readyForDeliveryOrders = Order::where('status', 'Accepted')->get();
-                $AvailableDeliveryOrders = Order::where('status', 'Waiting for Delivery Rider to Accept the order')->get();
+                $orders = Order::where('status', '!=', 'Delivered')->get();
 
+                $readyForDeliveryOrders = Order::where('status', 'Accepted')->get();
+                $statuses = ['Waiting for Delivery Rider to Accept the order', 'Seller Handed Order to Delivery Rider'];
+
+                // Retrieve and store the orders with the desired statuses
+                $AvailableDeliveryOrders = Order::whereIn('status', $statuses)->get();
                     switch ($user->usertype) {
                 case 'user':
                     return view('user.dashboard',['products' => $products]);

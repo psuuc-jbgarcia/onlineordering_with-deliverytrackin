@@ -8,7 +8,7 @@
         <title>Products</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <style>
             body {
@@ -222,7 +222,15 @@
                 </div>
             </div>
         </div>
-
+        @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Your order has been placed successfully.',
+            });
+        </script>
+        @endif
         <script>
             function showCategory(category) {
                 var categories = document.querySelectorAll('.category-products');
@@ -250,15 +258,7 @@
                 $('#productIDInput').val(productId);
             }
 
-            if(session('success'))
-            $(document).ready(function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: 'Your order has been placed successfully.',
-                });
-            });
-           
+         
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     </body>

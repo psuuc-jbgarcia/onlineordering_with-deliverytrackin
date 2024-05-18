@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Product Management</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
             background-color: #f8f9fa;
@@ -82,6 +85,7 @@
             background-color: #343a40;
             color: #ffffff;
             height: 100vh;
+            margin-top: 50px;
             padding-top: 20px;
             position: fixed;
             top: 0;
@@ -125,37 +129,60 @@
             margin-top: 100px;
             /* Adjust the value as needed */
         }
+    
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand mx-auto" href="#">Seller: {{ Auth::user()->name }}</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" class="dropdown-item">Logout</button>
-    </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
+
+
+<nav class="navbar navbar-expand-lg navbar-dark align-items-center" style="height: 80px;">
+    <div class="container">
+        <!-- Your Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="icon.png" alt="Your Logo" style="max-height: 100px;">
+        </a>
+      
+      
+
+        <!-- Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+        
+              <!-- Title -->
+        <div class="mx-auto text-center">
+            <p class="navbar-brand mb-0">Jekkong Online Ordering Website</p>
+        </div>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(Session::has('user_email'))
+                            {{ Session::get('user_email') }}
+                        @endif
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <x-dropdown-link :href="route('profile.edit')" style="text-decoration: none; color:black">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
     <div class="container-fluid">
         <div class="row">
             <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
@@ -182,10 +209,7 @@
                     <div class="tab-pane fade show active" id="manage-products">
                         <br>
                         <br>
-                        <div class="mb-3" id="addProductBtnWrapper">
-                            <a href="{{ route('gotoadd') }}" class="btn btn-primary">Add Product</a>
-                        </div>
-
+                  
                         <div class="form-group">
                             <label for="startDate">Start Date:</label>
                             <input type="date" id="startDate" class="form-control">
@@ -194,6 +218,11 @@
                             <label for="endDate">End Date:</label>
                             <input type="date" id="endDate" class="form-control">
                         </div>
+                        <br>
+                        <div class="mb-3" id="addProductBtnWrapper">
+                            <a href="{{ route('gotoadd') }}" class="btn btn-primary">Add Product</a>
+                        </div>
+<br><br>
                         <table class="table table-striped" id="productTable">
                             <thead>
                                 <tr>
@@ -223,7 +252,7 @@
 
                                     <td>
                                         <button class="btn btn-sm btn-action edit-btn" data-id="{{ $prod->id }}" data-name="{{ $prod->name }}" data-category="{{ $prod->category }}" data-price="{{ $prod->price }}" data-stock="{{ $prod->stock }}" data-description="{{ $prod->description }}" data-image="{{ $prod->image }}">Edit</button>
-                                        <button type="button" class="btn btn-sm btn-action delete-btn" data-toggle="modal" data-target="#confirmDeleteModal">
+                                        <button type="button" class="btn btn-sm btn-action delete-btn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-id="{{ $prod->id }}">
                                             Delete
                                         </button>
                                     </td>
@@ -246,6 +275,7 @@
                             <label for="endDateO">End Date:</label>
                             <input type="date" id="endDate" class="form-control">
                         </div>
+                        <br>
                         <table class="table table-striped" id="orderTable">
 
                             <thead>
@@ -286,12 +316,14 @@
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $order->id }}">
                                             <select name="status" id="" onchange="this.form.submit()">
-                                                <option value="Pending" @if ($order->status == 'Pending') selected @endif>Pending</option>
-                                                <option value="Seller Packing Your Order" @if ($order->status == 'Seller Packing Your Order') selected @endif>Seller Packing Your Order</option>
-                                                <option value="Waiting for Delivery Rider to Accept the order" @if ($order->status == 'Waiting for Delivery Rider to Accept the order') selected @endif>Waiting for Delivery Rider to Accept the order</option>
+                                            <option value="Pending" @if ($order->status == 'Pending') selected @endif>Pending</option>
+                            <option value="Seller Packing Your Order" @if ($order->status == 'Seller Packing Your Order') selected @endif>Seller Packing Your Order</option>
+                            <option value="Waiting for Delivery Rider to Accept the order" @if ($order->status == 'Waiting for Delivery Rider to Accept the order') selected @endif>Waiting for Delivery Rider to Accept the order</option>
+                            <option value="Accepted" @if ($order->status == 'Accepted') selected @endif>Accepted</option>
+                            <option value="Accepted" @if ($order->status == 'Out for Delivery') selected @endif>Out for Delivery</option>
 
 
-                                                <option value="Seller Handed Order to Delivery Rider" @if ($order->status == 'Seller Handed Order to Delivery Rider') selected @endif>Seller Handed Order to Delivery Rider</option>
+                            <option value="Seller Handed Order to Delivery Rider" @if ($order->status == 'Seller Handed Order to Delivery Rider') selected @endif>Seller Handed Order to Delivery Rider</option>
                                             </select>
                                         </form>
                                     </td>
@@ -311,6 +343,7 @@
         <label for="endDateRD">End Date:</label>
         <input type="date" id="endDateRD" class="form-control">
     </div>
+    <br>
     <table class="table table-striped" id="readyForDeliveryTable">
         <thead>
             <tr>
@@ -353,6 +386,8 @@
                             <option value="Seller Packing Your Order" @if ($order->status == 'Seller Packing Your Order') selected @endif>Seller Packing Your Order</option>
                             <option value="Waiting for Delivery Rider to Accept the order" @if ($order->status == 'Waiting for Delivery Rider to Accept the order') selected @endif>Waiting for Delivery Rider to Accept the order</option>
                             <option value="Accepted" @if ($order->status == 'Accepted') selected @endif>Accepted</option>
+                            <option value="Accepted" @if ($order->status == 'Out for Delivery') selected @endif>Out for Delivery</option>
+
 
                             <option value="Seller Handed Order to Delivery Rider" @if ($order->status == 'Seller Handed Order to Delivery Rider') selected @endif>Seller Handed Order to Delivery Rider</option>
                         </select>
@@ -372,9 +407,15 @@
 
 
     <div class="modal" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+    <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
+                 
                     <!-- Edit Product Form -->
                     <form id="editProductFormModal" action="{{ route('update') }}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -402,7 +443,6 @@
                         <div class="form-group">
                             <label for="productImage">Image</label>
                             <input type="file" class="form-control-file" id="productImage" name="productImage">
-                            <td><img src="./{{ $prod->image }}" alt="{{ $prod->image }}" style="max-width: 100px; height: 100px;"></td>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -430,17 +470,43 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie1ITaiL3FJ9hVjv1vcR3eK/5t1kl5kG6D" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-ES6vtBRF8aMTH6ek2F3yHFRKe4OQW1IVe0FEtWlbcd4XkPl1NodX7MZj6Ff3w8H8" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-JO3GQK7W2LSCSgqXMZZjdDBCF0NJZWFlTm83UyyD7zJ6P3yLv6F8jS0B+9P+0yL4" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
+<script>
+$(document).ready(function() {
+    $('.nav-link').click(function() {
+        $(this).tab('show');
+    });
+});
+
+
+</script>
     <script>
         $(document).ready(function() {
             // DataTable initialization
             var table = $('#productTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'pdfHtml5'
+                ],
                 "columnDefs": [{
                     "targets": 7, // Index of the 'created_At' column
                     "type": "date",
@@ -489,55 +555,62 @@
             });
         });
         $(document).ready(function() {
-            // DataTable initialization
-            var table = $('#orderTable').DataTable({
-                "columnDefs": [{
-                    "targets": 10, // Index of the 'created_At' column
-                    "type": "date",
-                    "render": function(data) {
-                        return moment(data).format('YYYY-MM-DD');
-                    }
-                }],
-                "order": [
-                    [7, 'desc']
+    // DataTable initialization
+    var orderTable = $('#orderTable').DataTable({
+        dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'pdfHtml5'
                 ],
-                "language": {
-                    "paginate": {
-                        "next": "&raquo;",
-                        "previous": "&laquo;"
-                    },
-                    "search": "Search:",
-                    "zeroRecords": "No matching records found",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "infoEmpty": "Showing 0 to 0 of 0 entries",
-                    "infoFiltered": "(filtered from _MAX_ total entries)"
-                }
-            });
+        "columnDefs": [{
+            "targets": 10, // Index of the 'created_At' column
+            "type": "date",
+            "render": function(data) {
+                return moment(data).format('YYYY-MM-DD');
+            }
+        }],
+        "order": [
+            [10, 'desc']
+        ],
+        "language": {
+            "paginate": {
+                "next": "&raquo;",
+                "previous": "&laquo;"
+            },
+            "search": "Search:",
+            "zeroRecords": "No matching records found",
+            "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+            "infoEmpty": "Showing 0 to 0 of 0 entries",
+            "infoFiltered": "(filtered from _MAX_ total entries)"
+        }
+    });
 
-            // Date range filtering
-            $('#startDateO, #endDateO').change(function() {
-                var startDate = $('#startDateO').val();
-                var endDate = $('#endDateO').val();
+    // Custom filtering function for date range
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            var startDate = $('#startDateO').val();
+            var endDate = $('#endDateO').val();
+            var min = startDate ? new Date(startDate) : null;
+            var max = endDate ? new Date(endDate) : null;
+            var date = new Date(data[10]); // Index of the 'created_At' column
 
-                $.fn.dataTable.ext.search.push(
-                    function(settings, data, dataIndex) {
-                        var min = new Date(startDate);
-                        var max = new Date(endDate);
-                        var targetDate = new Date(data[7]);
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
 
-                        if ((isNaN(min) && isNaN(max)) ||
-                            (isNaN(min) && targetDate <= max) ||
-                            (min <= targetDate && isNaN(max)) ||
-                            (min <= targetDate && targetDate <= max)) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
-                table.draw();
-            });
-        });
+    // Event listener to the two range filtering inputs to redraw on input
+    $('#startDateO, #endDateO').change(function() {
+        orderTable.draw();
+    });
+});
         // Show Add Product Modal
         $('#addProductBtn').click(function() {
             $('#addProductModal').modal('show');
@@ -568,6 +641,11 @@
     $(document).ready(function() {
         // DataTable initialization
         var table = $('#readyForDeliveryTable').DataTable({
+            dom: 'Bfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'pdfHtml5'
+                ],
             "columnDefs": [{
                 "targets": 10, // Index of the 'created_At' column
                 "type": "date",

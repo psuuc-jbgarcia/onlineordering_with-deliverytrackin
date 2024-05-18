@@ -62,25 +62,50 @@
         .order-card .accept-btn {
             margin-top: 10px;
         }
+        .logo-container {
+        height: 100px; /* Set a fixed height */
+        display: flex;
+        align-items: center;
+    }
     </style>
+<style>
+    .nav-link.active {
+        font-weight: bold;
+        color: black;
+    }
+</style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
+
+<nav class="navbar navbar-expand-lg navbar-dark align-items-center" style="height: 80px;">
     <div class="container">
-        <a class="navbar-brand" href="#">Your Logo</a>
+        <!-- Your Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="icon.png" alt="Your Logo" style="max-height: 100px;">
+        </a>
+      
+        <!-- Toggle Button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link{{ Request::is('/') ? ' active' : '' }}" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a  class="nav-link active" aria-current="page" href="{{ route('DeliveryAssign') }}">Delivery Assignment</a>
+                    <a class="nav-link{{ Request::is('DeliveryAssign') ? ' active' : '' }}" aria-current="page" href="{{ route('DeliveryAssign') }}">Delivery Assignment</a>
                 </li>
             </ul>
+            
+            <!-- Title -->
+            <div class="mx-auto text-center">
+                <p class="navbar-brand mb-0">Jekkong Online Ordering Website</p>
+            </div>
+
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -89,8 +114,9 @@
                         @endif
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <x-dropdown-link :href="route('profile.edit')" style="text-decoration: none; color:black">
+                            {{ __('Profile') }}
+                        </x-dropdown-link>                          
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
@@ -104,6 +130,9 @@
         </div>
     </div>
 </nav>
+
+
+
 <div class="container order-section">
     <h2>Available Orders</h2>
     <div class="row">
@@ -120,7 +149,11 @@
                             @csrf
                             <input type="hidden" value="{{ $avail->id }}" name="id">
                             <input type="hidden" value="{{ Session::get('user_email') }}" name="rider">
-                            <button type="submit" class="accept-btn btn btn-success">Accept Order</button>
+
+                          
+
+
+  <button type="submit" class="accept-btn btn btn-success">Accept Order</button>
                         </form>
                     </div>
                 </div>
